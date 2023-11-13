@@ -23,12 +23,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.fitpro.data.home
+import com.example.fitpro.data.welcome
 import com.example.fitpro.ui.theme.FitProTheme
 
 
@@ -41,8 +45,10 @@ class MainActivity : ComponentActivity() {
             FitProTheme {
                 // A surface container using the 'background' color from the theme
 
-                      val windowSizeClass = calculateWindowSizeClass(this)
-                       Myapp(windowSizeClass)
+                    //val windowSizeClass = calculateWindowSizeClass(this)
+//                       Myapp(windowSizeClass)
+               Mynagavation()
+
 
                     }
 
@@ -51,8 +57,21 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+// TODO 14 Add negavite from home screen to new screen
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@Composable
+fun Mynagavation(){
+    val  navController = rememberNavController()
 
-
+    NavHost(navController = navController, startDestination = welcome.route){
+        composable(welcome.route){
+            WelcomeScreen(navController)
+        }
+        composable(home.route){
+           portraitModeView()
+        }
+    }
+}
 
 
 // TODO 12 how to chnage the screen when it is protrate and landscape mode
@@ -73,9 +92,7 @@ fun Myapp(windowSize: WindowSizeClass){
 1 - we need to create a function and add it all of the screen in to the patiular column
 2 - how to use the scroll view in the
  with the help of verticalScroll(rememberScrollState())
- 3 - After that we are define the all of the screen one by one
-
-
+ 3 - After that we are define the all of the screen one by on
  */
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier){
@@ -92,6 +109,7 @@ fun HomeScreen(modifier: Modifier = Modifier){
 
         }
         Spacer(Modifier.height(16.dp))
+
 
 
 
@@ -189,6 +207,6 @@ fun FavoriteCollectionsGrid(modifier: Modifier = Modifier){
 @Composable
 fun GreetingPreview() {
     FitProTheme {
-        FavoriteCollectionsGrid()
+
     }
 }
